@@ -1,0 +1,62 @@
+.header {
+    position: relative;
+    background: url('https://cdn.pixabay.com/photo/2022/08/16/17/44/lake-7390888_1280.jpg') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* --- Navigation --- */
+/* Nav */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    margin: 10px auto;
+    width: 90%;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.active {
+    color: #FFD700;
+    font-weight: 700;
+}
+
+/* --- Hero текст --- */
+.hero {
+    padding-bottom: 80px;
+}
+
+.hero h1 {
+    font-size: 2.8em;
+    margin-bottom: 15px;
+    font-family: 'Bubblegum Sans', cursive;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.hero p {
+    font-size: 1.3em;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
