@@ -1,12 +1,24 @@
 import React from 'react';
+import { useState } from 'react';
 import styles from './Form.module.css';
 
 export default function Login() {
+    const [error, setError] = useState('');
 
     async function loginHandler(formData) {
         const name = formData.get("name");
         const email = formData.get("email");
         const password = formData.get("password");
+
+         if (!name || !email || !password) {
+            setError("Моля, попълнете всички полета!");
+            return;
+        }
+
+        if (password.length < 6) {
+           setError("Паролата трябва да е поне 6 символа!");
+            return;
+        }
 
         console.log("Login data:", { name, email, password });
     }
@@ -29,6 +41,7 @@ export default function Login() {
                     <button type="submit" className={styles.formBtn}>
                         Вход
                     </button>
+                    {error && <p className={styles.error}>{error}</p>}
                 </form>
             </div>
         </main>

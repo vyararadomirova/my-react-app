@@ -42,3 +42,10 @@
     color: white;
     border: none;
 }
+
+.error {
+    color: red;
+    margin-top: 5px;
+    font-weight: bold;
+    text-align: left;
+}
