@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from './Card';
-import styles from "./Home.module.css"; 
+import styles from "./Home.module.css";
 
 const topDestinations = [
   {
@@ -20,7 +20,7 @@ const topDestinations = [
   }
 ];
 
-export default function Home () {
+export default function Home() {
   return (
     <main>
       <section className={styles.intro}>
@@ -36,9 +36,9 @@ export default function Home () {
         <div className={styles.cards}>
           {topDestinations.map(d => (
             <Card
-              key={d.title} 
-              title={d.title} 
-              img={d.img} 
+              key={d.title}
+              title={d.title}
+              img={d.img}
               description={d.description}
             />
           ))}

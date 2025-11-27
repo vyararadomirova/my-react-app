@@ -2,11 +2,21 @@ import React from 'react';
 import styles from './Form.module.css';
 
 export default function Register() {
+
+    async function regiterHandler(formData) {
+        const name = formData.get("name");
+        const email = formData.get("email");
+        const password = formData.get("password");
+        const rePassword = formData.get("rePassword");
+
+        console.log("Register data:", { name, email, password, rePassword });
+    }
+
     return (
         <main>
             <div className={styles.formContainer}>
                 <h1>Регистрация</h1>
-                <form className={styles.form}>
+                <form className={styles.form} action={regiterHandler}>
                     <label htmlFor="name">Име</label>
                     <input type="text" id="name" name="name" required />
 

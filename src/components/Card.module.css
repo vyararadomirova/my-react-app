@@ -1,7 +1,7 @@
 .card {
     background-color: white;
     border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 300px;
     display: flex;
@@ -10,7 +10,7 @@
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
     text-align: left;
-    min-height: 430px; 
+    min-height: 430px;
 }
 
 .cardImg {
@@ -23,7 +23,7 @@
 
 .cardContent {
     padding: 15px;
-    flex-grow: 1; 
+    flex-grow: 1;
 }
 
 .card h3 {
@@ -38,7 +38,7 @@
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .btn {
@@ -53,7 +53,7 @@
     text-decoration: none;
     border: none;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -61,5 +61,5 @@
 .btn:hover {
     background: linear-gradient(135deg, lavender);
     transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
 }
