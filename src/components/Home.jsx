@@ -1,26 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import styles from "./Home.module.css";
 
-const topDestinations = [
-  {
-    title: 'Седемте Рилски езера',
-    img: 'https://floratours.eu/img/PROGRAMI/BIG_210220023045_1711974991405.jpg',
-    description: 'Седем огледала на природата, където всяка разходка е малко приключение.'
-  },
-  {
-    title: 'Язовир Въча',
-    img: 'https://freshholiday.bg/img/NOVINI/BIG_DSC_0680-800x500_1713162049243.jpg.webp',
-    description: 'Мястото, където планината шепне, водата блести и денят ти започва с усмивка.'
-  },
-  {
-    title: 'Мелник',
-    img: 'https://www.fixstay.com/img/c/large/185_3085.jpg?v=1748190616',
-    description: 'Градчето, където вината са сладки, а гледките – още по-неустоими!'
-  }
-];
-
 export default function Home() {
+  const [destinations, setDestinations] = useState([]);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    async function fetchDestinations() {
+
+      try {
+        const res = await fetch('http://localhost:3030/jsonstore/destinations');
+        
+        if (!res.ok) {
+          throw new Error('Неуспешно зареждане на дестинациите');
+        }
+        const data = await res.json();
+        setDestinations(Object.values(data));
+
+      } catch (err) {
+        console.error(err);
+        setError(err.message);
+      }
+    }
+
+    fetchDestinations();
+  }, []);
+
   return (
     <main>
       <section className={styles.intro}>
@@ -32,13 +38,14 @@ export default function Home() {
       </section>
 
       <section className={styles.topics}>
-        <h2>Моите топ 3 дестинации</h2>
+        <h2>Моите топ дестинации</h2>
+        {error && <p className={styles.error}>{error}</p>}
         <div className={styles.cards}>
-          {topDestinations.map(d => (
+          {destinations.map(d => (
             <Card
-              key={d.title}
-              title={d.title}
-              img={d.img}
+              key={d.id}
+              title={d.name}
+              img={d.image}
               description={d.description}
             />
           ))}

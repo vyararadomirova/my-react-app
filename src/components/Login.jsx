@@ -30,11 +30,10 @@ export default function Login() {
             const data = await response.json();
 
             if (!response.ok) {
-                setError(data.message || 'Грешка при входа');
+                setError('Грешка при входа');
                 return;
             }
 
-            console.log('Login успешен:', data);
             setError('');
 
             localStorage.setItem('accessToken', data.accessToken);
