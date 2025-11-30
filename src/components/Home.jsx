@@ -11,12 +11,14 @@ export default function Home() {
 
       try {
         const res = await fetch('http://localhost:3030/jsonstore/destinations');
-        
+
         if (!res.ok) {
           throw new Error('Неуспешно зареждане на дестинациите');
         }
         const data = await res.json();
-        setDestinations(Object.values(data));
+        const dataArr = Object.values(data);
+        const topDestinations = dataArr.filter(d => d.isTop);
+        setDestinations(topDestinations);
 
       } catch (err) {
         console.error(err);

@@ -14,6 +14,10 @@ export default function Header() {
           </li>
 
           <li>
+            <Link to="/destinations">Дестинации</Link>
+          </li>
+
+          <li>
             <Link to="/register">Регистрация</Link>
           </li>
 

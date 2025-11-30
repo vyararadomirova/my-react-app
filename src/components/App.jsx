@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Home.jsx';
+import Destinations from './Destinations.jsx';
 import Login from './Login.jsx';
 import Register from './Register.jsx';
 import Header from './Header.jsx';
@@ -12,6 +13,7 @@ export default function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/destinations" element={<Destinations />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>

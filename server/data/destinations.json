@@ -3,18 +3,51 @@
     "id": "1",
     "name": "Седемте Рилски езера",
     "image": "https://floratours.eu/img/PROGRAMI/BIG_210220023045_1711974991405.jpg",
-    "description": "Седем огледала на природата, където всяка разходка е малко приключение."
+    "description": "Седем огледала на природата, където всяка разходка е малко приключение.",
+    "isTop": true
   },
   "2": {
     "id": "2",
     "name": "Язовир Въча",
     "image": "https://freshholiday.bg/img/NOVINI/BIG_DSC_0680-800x500_1713162049243.jpg.webp",
-    "description": "Мястото, където планината шепне, водата блести и денят ти започва с усмивка."
+    "description": "Мястото, където планината шепне, водата блести и денят ти започва с усмивка.",
+    "isTop": true
   },
   "3": {
     "id": "3",
     "name": "Мелник",
     "image": "https://www.fixstay.com/img/c/large/185_3085.jpg?v=1748190616",
-    "description": "Градчето, където вината са сладки, а гледките – още по-неустоими!"
+    "description": "Градчето, където вината са сладки, а гледките – още по-неустоими!",
+    "isTop": true
+  },
+  "4": {
+    "id": "4",
+    "name": "Крушунските водопади",
+    "image": "https://m.netinfo.bg/media/images/32879/32879523/orig-orig-krushunskite-vodopadi.jpg",
+    "description": "Приказен воден рай с изумрудени басейни сред зелена гора."
+  },
+  "5": {
+    "id": "5",
+    "name": "Пещерата „Проходна“",
+    "image": "https://m.netinfo.bg/media/images/34727/34727217/orig-orig-ochite-na-boga.jpg",
+    "description": "Каменен тунел със свещени очи, през които небето наднича драматично."
+  },
+  "6": {
+    "id": "6",
+    "name": "Рупите",
+    "image": "https://bookvila.bg/img/210214043901-0.jpg",
+    "description": "Свещено място, където земята диша топлина, а духът на Ванга още се усеща."
+  },
+  "7": {
+    "id": "7",
+    "name": "Устието на река Велека",
+    "image": "https://palatka.bg/wp-content/uploads/2017/06/Ustieto_Na_Veleka.jpg",
+    "description": "Там реката и морето се прегръщат в тиха, почти магическа хармония."
+  },
+  "8": {
+    "id": "8",
+    "name": "Белоградчишките скали",
+    "image": "https://m.netinfo.bg/media/images/50292/50292359/orig-orig-belogradchishkite-skali.jpg",
+    "description": "Каменни великани, застинали в безмълвен разказ за древността."
   }
 }
