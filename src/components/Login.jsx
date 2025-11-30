@@ -1,42 +1,61 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './Form.module.css';
 
 export default function Login() {
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     async function loginHandler(formData) {
-        const name = formData.get("name");
         const email = formData.get("email");
         const password = formData.get("password");
 
-         if (!name || !email || !password) {
+        if (!email || !password) {
             setError("Моля, попълнете всички полета!");
             return;
         }
 
         if (password.length < 6) {
-           setError("Паролата трябва да е поне 6 символа!");
+            setError("Паролата трябва да е поне 6 символа!");
             return;
         }
 
-        console.log("Login data:", { name, email, password });
+        try {
+            const response = await fetch('http://localhost:3030/users/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                setError(data.message || 'Грешка при входа');
+                return;
+            }
+
+            console.log('Login успешен:', data);
+            setError('');
+
+            localStorage.setItem('accessToken', data.accessToken);
+            navigate('/');
+
+        } catch (err) {
+            console.error(err);
+            setError('Не може да се свърже със сървъра');
+        }
     }
 
     return (
         <main>
             <div className={styles.formContainer}>
                 <h1>Вход</h1>
-
                 <form className={styles.form} action={loginHandler}>
-                    <label htmlFor="name">Име</label>
-                    <input type="text" id="name" name="name" required />
-
                     <label htmlFor="email">Имейл</label>
-                    <input type="email" id="email" name="email" required />
+                    <input type="email" id="email" name="email" />
 
                     <label htmlFor="password">Парола</label>
-                    <input type="password" id="password" name="password" required />
+                    <input type="password" id="password" name="password" />
 
                     <button type="submit" className={styles.formBtn}>
                         Вход

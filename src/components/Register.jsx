@@ -1,12 +1,12 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './Form.module.css';
 
 export default function Register() {
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
-
-    async function regiterHandler(formData) {
+    async function registerHandler(formData) {
         const name = formData.get("name");
         const email = formData.get("email");
         const password = formData.get("password");
@@ -27,14 +27,36 @@ export default function Register() {
             return;
         }
 
-        console.log("Register data:", { name, email, password, rePassword });
+        try {
+            const res = await fetch('http://localhost:3030/users/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password })
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                setError("Грешка при регистрацията!");
+                return;
+            }
+
+            setError('');
+
+            localStorage.setItem('token', data.accessToken);
+            navigate('/');
+
+        } catch (err) {
+            console.error(err);
+            setError("Грешка при връзката със сървъра!");
+        }
     }
 
     return (
         <main>
             <div className={styles.formContainer}>
                 <h1>Регистрация</h1>
-                <form className={styles.form} action={regiterHandler}>
+                <form className={styles.form} action={registerHandler}>
                     <label htmlFor="name">Име</label>
                     <input type="text" id="name" name="name" />
 
@@ -45,11 +67,7 @@ export default function Register() {
                     <input type="password" id="password" name="password" />
 
                     <label htmlFor="re-password">Повторете парола</label>
-                    <input
-                        type="password"
-                        id="re-password"
-                        name="rePassword"
-                    />
+                    <input type="password" id="re-password" name="rePassword" />
 
                     <button type="submit" className={styles.formBtn}>
                         Регистрирай се
