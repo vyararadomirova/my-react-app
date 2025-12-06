@@ -7,7 +7,7 @@ export default function Register() {
     const navigate = useNavigate();
 
     const registerHandler = async (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
 
         const formData = new FormData(e.target);
         const name = formData.get("name");
@@ -45,9 +45,8 @@ export default function Register() {
             }
 
             setError('');
-            localStorage.setItem('token', data.accessToken);
+            localStorage.setItem('accessToken', data.accessToken);
             navigate('/');
-
         } catch (err) {
             console.error(err);
             setError("Грешка при връзката със сървъра!");
@@ -55,28 +54,17 @@ export default function Register() {
     };
 
     return (
-        <main>
-            <div className={styles.formContainer}>
-                <h2>Регистрация</h2>
-                <form className={styles.form} onSubmit={registerHandler}>
-                    <label htmlFor="name">Име</label>
-                    <input type="text" id="name" name="name" />
-
-                    <label htmlFor="email">Имейл</label>
-                    <input type="email" id="email" name="email" />
-
-                    <label htmlFor="password">Парола</label>
-                    <input type="password" id="password" name="password" />
-
-                    <label htmlFor="re-password">Повторете парола</label>
-                    <input type="password" id="re-password" name="rePassword" />
-
-                    <button type="submit" className={styles.formBtn}>
-                        Регистрирай се
-                    </button>
-                    {error && <p className={styles.error}>{error}</p>}
-                </form>
-            </div>
+        <main className={styles.formContainer}>
+            <h2 className={styles.formTitle}>Регистрация</h2>
+            <form className={styles.form} onSubmit={registerHandler}>
+                <input type="text" name="name" placeholder="Име" required />
+                <input type="email" name="email" placeholder="Имейл" required />
+                <input type="password" name="password" placeholder="Парола" required />
+                <input type="password" name="rePassword" placeholder="Повторете парола" required />
+                <button type="submit" className={styles.formBtn}>Регистрирай се</button>
+                {error && <p className={styles.error}>{error}</p>}
+            </form>
         </main>
     );
 }
+

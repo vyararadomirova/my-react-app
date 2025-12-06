@@ -10,8 +10,6 @@
     width: 100%;
 }
 
-/* --- Navigation --- */
-/* Nav */
 .nav {
     display: flex;
     justify-content: space-between;
@@ -44,7 +42,6 @@
     font-weight: 700;
 }
 
-/* --- Hero текст --- */
 .hero {
     padding-bottom: 80px;
 }
@@ -59,4 +56,13 @@
 .hero p {
     font-size: 1.3em;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.linkButton {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
 }

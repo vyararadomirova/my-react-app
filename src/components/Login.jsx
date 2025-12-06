@@ -40,7 +40,6 @@ export default function Login() {
             setError('');
             localStorage.setItem('accessToken', data.accessToken);
             navigate('/');
-
         } catch (err) {
             console.error(err);
             setError('Не може да се свърже със сървъра');
@@ -48,24 +47,16 @@ export default function Login() {
     };
 
     return (
-        <main>
-            <div className={styles.formContainer}>
-                <h2>Вход</h2>
-                <form className={styles.form} onSubmit={loginHandler}>
-                    <label htmlFor="email">Имейл</label>
-                    <input type="email" id="email" name="email" />
-
-                    <label htmlFor="password">Парола</label>
-                    <input type="password" id="password" name="password" />
-
-                    <button type="submit" className={styles.formBtn}>
-                        Вход
-                    </button>
-
-                    {error && <p className={styles.error}>{error}</p>}
-                </form>
-            </div>
+        <main className={styles.formContainer}>
+            <h2 className={styles.formTitle}>Вход</h2>
+            <form className={styles.form} onSubmit={loginHandler}>
+                <input type="email" name="email" placeholder="Имейл" required />
+                <input type="password" name="password" placeholder="Парола" required />
+                <button type="submit" className={styles.formBtn}>Вход</button>
+                {error && <p className={styles.error}>{error}</p>}
+            </form>
         </main>
     );
 }
+
 

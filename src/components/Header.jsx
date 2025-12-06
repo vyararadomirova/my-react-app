@@ -25,7 +25,11 @@ export default function Header() {
           <li><Link to="/destinations">Дестинации</Link></li>
 
           {isLoggedIn ? (
-            <li><Link to="/logout" onClick={logout}>Изход</Link></li>
+            <>
+              <li><Link to="/forum">Форум</Link></li>
+              <li><button onClick={logout} className={styles.linkButton}>Изход</button></li>
+            </>
+
           ) : (
             <>
               <li><Link to="/register">Регистрация</Link></li>
