@@ -46,6 +46,7 @@ export default function Home() {
           {destinations.map(d => (
             <Card
               key={d.id}
+              id={d.id}
               title={d.name}
               img={d.image}
               description={d.description}

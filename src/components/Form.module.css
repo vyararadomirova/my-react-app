@@ -7,6 +7,10 @@
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
+h2 {
+    color: #3e6b56;
+}
+
 .form {
     display: flex;
     flex-direction: column;
@@ -19,7 +23,7 @@
     margin-left: 10%;
     margin-bottom: 5px;
     font-weight: 500;
-    color: plum;
+    color: #3e6b56;
 }
 
 .form input {

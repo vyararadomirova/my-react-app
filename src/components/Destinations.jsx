@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Destinations.module.css";
-import Card from "./Card"; 
+import Card from "./Card";
 
 export default function Destinations() {
   const [destinations, setDestinations] = useState([]);
@@ -15,7 +15,7 @@ export default function Destinations() {
         }
 
         const data = await res.json();
-        const dataArr = Object.values(data); 
+        const dataArr = Object.values(data);
         setDestinations(dataArr);
 
       } catch (err) {
@@ -34,6 +34,7 @@ export default function Destinations() {
         {destinations.map(d => (
           <Card
             key={d.id}
+            id={d.id}
             title={d.name}
             img={d.image}
             description={d.description}

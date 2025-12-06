@@ -55,7 +55,7 @@ export default function Register() {
     return (
         <main>
             <div className={styles.formContainer}>
-                <h1>Регистрация</h1>
+                <h2>Регистрация</h2>
                 <form className={styles.form} action={registerHandler}>
                     <label htmlFor="name">Име</label>
                     <input type="text" id="name" name="name" />

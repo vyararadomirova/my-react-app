@@ -48,7 +48,7 @@ export default function Login() {
     return (
         <main>
             <div className={styles.formContainer}>
-                <h1>Вход</h1>
+                <h2>Вход</h2>
                 <form className={styles.form} action={loginHandler}>
                     <label htmlFor="email">Имейл</label>
                     <input type="email" id="email" name="email" />
