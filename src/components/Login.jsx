@@ -6,7 +6,10 @@ export default function Login() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    async function loginHandler(formData) {
+    const loginHandler = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
         const email = formData.get("email");
         const password = formData.get("password");
 
@@ -35,7 +38,6 @@ export default function Login() {
             }
 
             setError('');
-
             localStorage.setItem('accessToken', data.accessToken);
             navigate('/');
 
@@ -43,13 +45,13 @@ export default function Login() {
             console.error(err);
             setError('Не може да се свърже със сървъра');
         }
-    }
+    };
 
     return (
         <main>
             <div className={styles.formContainer}>
                 <h2>Вход</h2>
-                <form className={styles.form} action={loginHandler}>
+                <form className={styles.form} onSubmit={loginHandler}>
                     <label htmlFor="email">Имейл</label>
                     <input type="email" id="email" name="email" />
 
@@ -59,9 +61,11 @@ export default function Login() {
                     <button type="submit" className={styles.formBtn}>
                         Вход
                     </button>
+
                     {error && <p className={styles.error}>{error}</p>}
                 </form>
             </div>
         </main>
     );
 }
+

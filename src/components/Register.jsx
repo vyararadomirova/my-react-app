@@ -6,7 +6,10 @@ export default function Register() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    async function registerHandler(formData) {
+    const registerHandler = async (e) => {
+        e.preventDefault(); 
+
+        const formData = new FormData(e.target);
         const name = formData.get("name");
         const email = formData.get("email");
         const password = formData.get("password");
@@ -42,7 +45,6 @@ export default function Register() {
             }
 
             setError('');
-
             localStorage.setItem('token', data.accessToken);
             navigate('/');
 
@@ -50,13 +52,13 @@ export default function Register() {
             console.error(err);
             setError("Грешка при връзката със сървъра!");
         }
-    }
+    };
 
     return (
         <main>
             <div className={styles.formContainer}>
                 <h2>Регистрация</h2>
-                <form className={styles.form} action={registerHandler}>
+                <form className={styles.form} onSubmit={registerHandler}>
                     <label htmlFor="name">Име</label>
                     <input type="text" id="name" name="name" />
 
