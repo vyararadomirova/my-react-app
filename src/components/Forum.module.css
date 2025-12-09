@@ -63,12 +63,14 @@
 }
 
 .commentCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     background-color: #fff0e6;
     padding: 15px 20px;
     border-radius: 12px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 1rem;
-    text-align: left;
 }
 
 .commentCard h4 {
@@ -80,3 +82,22 @@
     margin: 0;
     color: #555;
 }
+
+.commentCard div { 
+    display: flex;
+    flex-direction: column;
+}
+
+.commentCard button {
+    align-self: flex-end;
+    background-color: plum;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+

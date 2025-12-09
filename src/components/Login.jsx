@@ -39,6 +39,7 @@ export default function Login() {
 
             setError('');
             localStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem("userName", data.name);
             navigate('/');
         } catch (err) {
             console.error(err);

@@ -1,22 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Forum.module.css";
 
 export default function Forum() {
-  const [comments, setComments] = useState([
-    { name: "Анна", text: "Много обичам Родопите! Хората са топли, храната е уникална, а природата си е магия." },
-    { name: "Иван", text: "Несебър е моето място – морето, историята и малките улички ме карат да се връщам отново и отново." },
-  ]);
+  const [comments, setComments] = useState([]);
+  const [currentUser, setCurrentUser] = useState("");
 
-  const handleSubmit = (e) => {
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("userName");
+    if (savedUser) {
+      setCurrentUser(savedUser);
+    }
+
+    const savedComments = localStorage.getItem("comments");
+    if (savedComments) {
+      setComments(JSON.parse(savedComments));
+    }
+  }, []);
+
+  const addComment = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const name = formData.get("name");
     const text = formData.get("comment");
 
-    if (name && text) {
-      setComments([{ name, text }, ...comments]);
-      e.target.reset();
-    }
+    if (!text) return;
+
+    const newComment = {
+      id: Date.now().toString(),
+      name: currentUser,
+      text,
+      owner: currentUser
+    };
+
+    const updatedComments = [newComment, ...comments];
+    setComments(updatedComments);
+    localStorage.setItem("comments", JSON.stringify(updatedComments));
+
+    e.target.reset();
+  };
+
+  const removeComment = (commentId) => {
+    const updatedComments = comments.filter(c => c.id !== commentId);
+    setComments(updatedComments);
+    localStorage.setItem("comments", JSON.stringify(updatedComments));
   };
 
   return (
@@ -25,22 +51,39 @@ export default function Forum() {
         <h2>Сподели любимото си място!</h2>
         <p>Кое българско кътче те е впечатлило най-много и защо?</p>
 
-        <form className={styles.forumForm} onSubmit={handleSubmit}>
-          <input type="text" name="name" placeholder="Вашето име" required />
-          <textarea name="comment" rows="4" placeholder="Вашето мнение" required></textarea>
+        <form className={styles.forumForm} onSubmit={addComment}>
+          <textarea name="comment" placeholder="Вашето мнение" required />
           <button type="submit" className={styles.submitBtn}>Сподели</button>
         </form>
       </section>
 
       <section className={styles.comments}>
-        <h3>Коментари от други пътешественици:</h3>
-        {comments.map((c, i) => (
-          <div key={i} className={styles.commentCard}>
-            <h4>{c.name}</h4>
-            <p>{c.text}</p>
-          </div>
-        ))}
+        {comments.length > 0 ? (
+          <>
+            <h3>Коментари от други пътешественици:</h3>
+            {comments.map(comment => (
+              <div key={comment.id} className={styles.commentCard}>
+                <div>
+                  <h4>{comment.name}</h4>
+                  <p>{comment.text}</p>
+                </div>
+
+                {comment.owner === currentUser && (
+                  <button className={styles.deleteBtn} onClick={() => removeComment(comment.id)}>
+                    Изтрий
+                  </button>
+                )}
+              </div>
+            ))}
+          </>
+        ) : (
+          <h3>Все още няма коментари от други потребители! :)</h3>
+        )}
       </section>
     </main>
   );
 }
+
+
+
+
