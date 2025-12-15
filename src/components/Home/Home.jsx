@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import Card from './Card';
+import React, { useEffect, useState } from "react";
+import Card from "../Card/Card.jsx";
 import styles from "./Home.module.css";
 
 export default function Home() {
@@ -10,10 +10,10 @@ export default function Home() {
     async function fetchDestinations() {
 
       try {
-        const res = await fetch('http://localhost:3030/jsonstore/destinations');
+        const res = await fetch("http://localhost:3030/jsonstore/destinations");
 
         if (!res.ok) {
-          throw new Error('Неуспешно зареждане на дестинациите');
+          throw new Error("Неуспешно зареждане на дестинациите");
         }
         const data = await res.json();
         const dataArr = Object.values(data);

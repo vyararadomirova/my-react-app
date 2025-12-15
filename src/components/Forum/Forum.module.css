@@ -2,11 +2,11 @@
     max-width: 600px;
     margin: 2rem auto;
     padding: 0 1rem;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: "Segoe UI", sans-serif;
 }
 
 .topic {
-    background-color: #fff8f0; 
+    background-color: #fff8f0;
     padding: 20px 25px;
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
@@ -38,7 +38,7 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     font-size: 1em;
-    text-align: center; /* центрира текста в инпута */
+    text-align: center;
 }
 
 .submitBtn {
@@ -83,7 +83,7 @@
     color: #555;
 }
 
-.commentCard div { 
+.commentCard div {
     display: flex;
     flex-direction: column;
 }
@@ -100,4 +100,9 @@
     flex-shrink: 0;
 }
 
-
+.forumSection .error {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}

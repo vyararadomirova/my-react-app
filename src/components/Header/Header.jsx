@@ -1,17 +1,17 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import styles from './Header.module.css';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import styles from "./Header.module.css";
 
 export default function Header() {
   const navigate = useNavigate();
 
   function logout() {
-    localStorage.removeItem('accessToken');
-    navigate('/');
+    localStorage.removeItem("accessToken");
+    navigate("/");
   }
 
   let isLoggedIn = false;
-  if (localStorage.getItem('accessToken')) {
+  if (localStorage.getItem("accessToken")) {
     isLoggedIn = true;
   }
 

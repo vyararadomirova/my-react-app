@@ -1,13 +1,13 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Home from './Home.jsx';
-import Destinations from './Destinations.jsx';
-import DestinationDetails from './DestinationDetails.jsx';
-import Login from './Login.jsx';
-import Register from './Register.jsx';
-import Header from './Header.jsx';
-import Footer from './Footer.jsx';
-import Forum from './Forum.jsx';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Home from "./Home/Home.jsx";
+import Destinations from "./Destinations/Destinations.jsx";
+import DestinationDetails from "./DestinationDetails/DestinationDetails.jsx";
+import Login from "./Auth/Login.jsx";
+import Register from "./Auth/Register.jsx";
+import Header from "./Header/Header.jsx";
+import Footer from "./Footer/Footer.jsx";
+import Forum from "./Forum/Forum.jsx";
 
 export default function App() {
   return (

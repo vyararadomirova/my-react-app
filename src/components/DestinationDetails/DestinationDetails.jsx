@@ -1,11 +1,10 @@
-
 import React, { useEffect, useState } from "react";
 import styles from "./DestinationDetails.module.css";
 import { useParams, Link } from "react-router-dom";
 
 export default function DestinationDetails() {
   const { id } = useParams();
-  const [destination, setDestination] = useState(null);
+  const [destination, setDestination] = useState({});
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -32,9 +31,6 @@ export default function DestinationDetails() {
     return <p className={styles.error}>{error}</p>;
   }
 
-  if (!destination) {
-    return <p className={styles.loading}>Зареждане...</p>;
-  }
 
   return (
     <main className={styles.details}>

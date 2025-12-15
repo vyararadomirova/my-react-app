@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Destinations.module.css";
-import Card from "./Card";
+import Card from "../Card/Card.jsx";
 
 export default function Destinations() {
   const [destinations, setDestinations] = useState([]);

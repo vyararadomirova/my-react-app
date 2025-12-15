@@ -4,10 +4,11 @@ import styles from "./Forum.module.css";
 export default function Forum() {
   const [comments, setComments] = useState([]);
   const [currentUser, setCurrentUser] = useState("");
-
+  const [commentText, setCommentText] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const savedUser = localStorage.getItem("userName");
+    const savedUser = localStorage.getItem("email");
     if (savedUser) {
       setCurrentUser(savedUser);
     }
@@ -18,17 +19,22 @@ export default function Forum() {
     }
   }, []);
 
+  const commentChangeHandler = (e) => {
+    setCommentText(e.target.value);
+  };
+
   const addComment = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const text = formData.get("comment");
 
-    if (!text) return;
+    if (!commentText) { 
+      setError("Коментарът не може да е празен!");
+      return;
+    };
 
     const newComment = {
       id: Date.now().toString(),
       name: currentUser,
-      text,
+      text: commentText,
       owner: currentUser
     };
 
@@ -36,7 +42,8 @@ export default function Forum() {
     setComments(updatedComments);
     localStorage.setItem("comments", JSON.stringify(updatedComments));
 
-    e.target.reset();
+    setCommentText("");
+    setError("");
   };
 
   const removeComment = (commentId) => {
@@ -52,8 +59,15 @@ export default function Forum() {
         <p>Кое българско кътче те е впечатлило най-много и защо?</p>
 
         <form className={styles.forumForm} onSubmit={addComment}>
-          <textarea name="comment" placeholder="Вашето мнение" required />
+          <textarea
+            name="comment"
+            placeholder="Вашето мнение"
+            value={commentText}
+            onChange={commentChangeHandler}
+          />
           <button type="submit" className={styles.submitBtn}>Сподели</button>
+
+          {error && <p className={styles.error}>{error}</p>}
         </form>
       </section>
 
