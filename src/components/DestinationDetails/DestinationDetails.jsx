@@ -53,7 +53,7 @@ export default function DestinationDetails() {
           </div>
 
           <Link to="/destinations" className={styles.backBtn}>
-            Назад към всички дестинации
+            Към всички дестинации
           </Link>
         </div>
 

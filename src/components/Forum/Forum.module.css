@@ -65,7 +65,7 @@
 .commentCard {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: flex-end; /* бутоните са в долната част на картата */
     background-color: #fff0e6;
     padding: 15px 20px;
     border-radius: 12px;
@@ -73,23 +73,28 @@
     margin-bottom: 1rem;
 }
 
+.textSection {
+    max-width: 70%;
+}
+
 .commentCard h4 {
     margin-bottom: 0.25rem;
     color: #3e6b56;
 }
 
-.commentCard p {
+.commentCard p,
+.commentCard textarea {
     margin: 0;
     color: #555;
+    font-size: 0.95rem;
 }
 
-.commentCard div {
+.buttonSection {
     display: flex;
-    flex-direction: column;
+    gap: 5px; /* бутоните един до друг */
 }
 
 .commentCard button {
-    align-self: flex-end;
     background-color: plum;
     color: white;
     border: none;
@@ -97,7 +102,10 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.85rem;
-    flex-shrink: 0;
+}
+
+.commentCard button:hover {
+    background-color: #d290d2;
 }
 
 .forumSection .error {
@@ -106,3 +114,5 @@
     margin-top: 10px;
     text-align: center;
 }
+
+

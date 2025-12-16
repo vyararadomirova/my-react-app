@@ -3,14 +3,16 @@ import styles from "./Forum.module.css";
 
 export default function Forum() {
   const [comments, setComments] = useState([]);
-  const [currentUser, setCurrentUser] = useState("");
+  const [currentUserEmail, setCurrentUserEmail] = useState("");
   const [commentText, setCommentText] = useState("");
   const [error, setError] = useState("");
+  const [editingCommentId, setEditingCommentId] = useState("");
+  const [editingText, setEditingText] = useState("");
 
   useEffect(() => {
     const savedUser = localStorage.getItem("email");
     if (savedUser) {
-      setCurrentUser(savedUser);
+      setCurrentUserEmail(savedUser);
     }
 
     const savedComments = localStorage.getItem("comments");
@@ -19,23 +21,21 @@ export default function Forum() {
     }
   }, []);
 
-  const commentChangeHandler = (e) => {
-    setCommentText(e.target.value);
-  };
+  const commentChangeHandler = (e) => setCommentText(e.target.value);
 
   const addComment = (e) => {
     e.preventDefault();
 
-    if (!commentText) { 
+    if (!commentText) {
       setError("Коментарът не може да е празен!");
       return;
-    };
+    }
 
     const newComment = {
       id: Date.now().toString(),
-      name: currentUser,
+      name: currentUserEmail,
       text: commentText,
-      owner: currentUser
+      owner: currentUserEmail,
     };
 
     const updatedComments = [newComment, ...comments];
@@ -47,9 +47,34 @@ export default function Forum() {
   };
 
   const removeComment = (commentId) => {
-    const updatedComments = comments.filter(c => c.id !== commentId);
+    const updatedComments = comments.filter((c) => c.id !== commentId);
     setComments(updatedComments);
     localStorage.setItem("comments", JSON.stringify(updatedComments));
+  };
+
+  const startEdit = (comment) => {
+    setEditingCommentId(comment.id);
+    setEditingText(comment.text);
+  };
+
+  const editChangeHandler = (e) => setEditingText(e.target.value);
+
+  const saveEdit = () => {
+    if (!editingText) {
+      return;
+    }
+
+    const updatedComments = comments.map((c) => {
+      if (c.id === editingCommentId) {
+        c.text = editingText;
+      }
+      return c;
+    });
+
+    setComments(updatedComments);
+    localStorage.setItem("comments", JSON.stringify(updatedComments));
+    setEditingCommentId("");
+    setEditingText("");
   };
 
   return (
@@ -65,8 +90,9 @@ export default function Forum() {
             value={commentText}
             onChange={commentChangeHandler}
           />
-          <button type="submit" className={styles.submitBtn}>Сподели</button>
-
+          <button type="submit" className={styles.submitBtn}>
+            Сподели
+          </button>
           {error && <p className={styles.error}>{error}</p>}
         </form>
       </section>
@@ -75,17 +101,29 @@ export default function Forum() {
         {comments.length > 0 ? (
           <>
             <h3>Коментари от други пътешественици:</h3>
-            {comments.map(comment => (
+            {comments.map((comment) => (
               <div key={comment.id} className={styles.commentCard}>
-                <div>
+                <div className={styles.textSection}>
                   <h4>{comment.name}</h4>
-                  <p>{comment.text}</p>
+                  {editingCommentId === comment.id ? (
+                    <textarea
+                      value={editingText}
+                      onChange={editChangeHandler}
+                    />
+                  ) : (
+                    <p>{comment.text}</p>
+                  )}
                 </div>
 
-                {comment.owner === currentUser && (
-                  <button className={styles.deleteBtn} onClick={() => removeComment(comment.id)}>
-                    Изтрий
-                  </button>
+                {comment.owner === currentUserEmail && (
+                  <div className={styles.buttonSection}>
+                    {editingCommentId === comment.id ? (
+                      <button onClick={saveEdit}>Запази</button>
+                    ) : (
+                      <button onClick={() => startEdit(comment)}>Редактирай</button>
+                    )}
+                    <button onClick={() => removeComment(comment.id)}>Изтрий</button>
+                  </div>
                 )}
               </div>
             ))}
@@ -97,7 +135,4 @@ export default function Forum() {
     </main>
   );
 }
-
-
-
 
