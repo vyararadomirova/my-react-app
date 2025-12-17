@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthProvider.jsx";
 import styles from "./Header.module.css";
 
 export default function Header() {
   const navigate = useNavigate();
+  const { accessToken, logout } = useContext(AuthContext);
 
-  function logout() {
-    localStorage.removeItem("accessToken");
+  function onLogout() {
+    logout();
     navigate("/");
   }
 
   let isLoggedIn = false;
-  if (localStorage.getItem("accessToken")) {
+  if (accessToken) {
     isLoggedIn = true;
   }
 
@@ -27,9 +29,12 @@ export default function Header() {
           {isLoggedIn ? (
             <>
               <li><Link to="/forum">Форум</Link></li>
-              <li><button onClick={logout} className={styles.linkButton}>Изход</button></li>
+              <li>
+                <button onClick={onLogout} className={styles.linkButton}>
+                  Изход
+                </button>
+              </li>
             </>
-
           ) : (
             <>
               <li><Link to="/register">Регистрация</Link></li>

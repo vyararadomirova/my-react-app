@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Form.module.css";
+import { AuthContext } from "../AuthProvider.jsx";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+
+    const { login } = useContext(AuthContext);
 
     const emailChangeHandler = (e) => {
         setEmail(e.target.value);
@@ -44,8 +47,7 @@ export default function Login() {
             }
 
             setError("");
-            localStorage.setItem("accessToken", data.accessToken);
-            localStorage.setItem("email", data.email);
+            login(data.email, data.accessToken);
             navigate("/");
         } catch (err) {
             console.error(err);
@@ -83,6 +85,7 @@ export default function Login() {
         </main>
     );
 }
+
 
 
 

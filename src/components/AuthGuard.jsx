@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
+import { AuthContext } from "./AuthProvider.jsx";
 
 export default function AuthGuard(props) {
-  const token = localStorage.getItem("accessToken");
+  const { accessToken } = useContext(AuthContext);
   const children = props.children;
 
-  if (!token) {
+  if (!accessToken) {
     return <Navigate to="/login"/>;
   }
 

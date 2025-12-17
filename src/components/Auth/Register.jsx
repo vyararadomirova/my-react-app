@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Form.module.css";
+import { AuthContext } from "../AuthProvider.jsx";
 
 export default function Register() {
     const [name, setName] = useState("");
@@ -10,6 +11,7 @@ export default function Register() {
     const [error, setError] = useState("");
 
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     const nameChangeHandler = (e) => {
         setName(e.target.value);
@@ -60,8 +62,7 @@ export default function Register() {
             }
 
             setError("");
-            localStorage.setItem("accessToken", data.accessToken);
-            localStorage.setItem("email", data.email);
+            login(data.email, data.accessToken);
             navigate("/");
         } catch (err) {
             console.error(err);

@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect, useContext } from "react";
 import styles from "./Forum.module.css";
+import { AuthContext } from "../AuthProvider.jsx";
 
 export default function Forum() {
   const [comments, setComments] = useState([]);
-  const [currentUserEmail, setCurrentUserEmail] = useState("");
   const [commentText, setCommentText] = useState("");
   const [error, setError] = useState("");
   const [editingCommentId, setEditingCommentId] = useState("");
   const [editingText, setEditingText] = useState("");
 
-  useEffect(() => {
-    const savedUser = localStorage.getItem("email");
-    if (savedUser) {
-      setCurrentUserEmail(savedUser);
-    }
+  const { currentUserEmail, accessToken } = useContext(AuthContext);
 
+  useEffect(() => {
     const savedComments = localStorage.getItem("comments");
     if (savedComments) {
       setComments(JSON.parse(savedComments));
@@ -120,9 +118,13 @@ export default function Forum() {
                     {editingCommentId === comment.id ? (
                       <button onClick={saveEdit}>Запази</button>
                     ) : (
-                      <button onClick={() => startEdit(comment)}>Редактирай</button>
+                      <button onClick={() => startEdit(comment)}>
+                        Редактирай
+                      </button>
                     )}
-                    <button onClick={() => removeComment(comment.id)}>Изтрий</button>
+                    <button onClick={() => removeComment(comment.id)}>
+                      Изтрий
+                    </button>
                   </div>
                 )}
               </div>

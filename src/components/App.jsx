@@ -9,24 +9,27 @@ import Header from "./Header/Header.jsx";
 import Footer from "./Footer/Footer.jsx";
 import Forum from "./Forum/Forum.jsx";
 import AuthGuard from "./AuthGuard.jsx";
+import AuthProvider from "./AuthProvider.jsx";
 
 export default function App() {
   return (
     <>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/destinations" element={<Destinations />} />
-        <Route path="/destinations/:id" element={<DestinationDetails />} />
-        <Route path="/forum" element={
-          <AuthGuard>
-            <Forum />
-          </AuthGuard>
-        } />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-      <Footer />
+      <AuthProvider>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/destinations" element={<Destinations />} />
+          <Route path="/destinations/:id" element={<DestinationDetails />} />
+          <Route path="/forum" element={
+            <AuthGuard>
+              <Forum />
+            </AuthGuard>
+          } />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+        <Footer />
+      </AuthProvider>
     </>
 
   );
