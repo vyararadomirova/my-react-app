@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useContext } from "react";
 import styles from "./Forum.module.css";
 import { AuthContext } from "../AuthProvider.jsx";
@@ -12,16 +11,37 @@ export default function Forum() {
 
   const { currentUserEmail, accessToken } = useContext(AuthContext);
 
+  // GET comments
   useEffect(() => {
-    const savedComments = localStorage.getItem("comments");
-    if (savedComments) {
-      setComments(JSON.parse(savedComments));
-    }
+    const fetchComments = async () => {
+      try {
+        const res = await fetch("http://localhost:3030/data/comments");
+
+        if (!res.ok) {
+          throw new Error("Грешка при зареждане на коментарите");
+        }
+
+        const data = await res.json();
+
+        // филтрираме празните коментари
+        const validComments = Object.values(data).filter(c => c.text);
+
+        setComments(validComments);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchComments();
   }, []);
 
-  const commentChangeHandler = (e) => setCommentText(e.target.value);
 
-  const addComment = (e) => {
+  const commentChangeHandler = (e) => {
+    setCommentText(e.target.value);
+  };
+
+  // POST comment
+  const addComment = async (e) => {
     e.preventDefault();
 
     if (!commentText) {
@@ -30,50 +50,103 @@ export default function Forum() {
     }
 
     const newComment = {
-      id: Date.now().toString(),
       name: currentUserEmail,
       text: commentText,
       owner: currentUserEmail,
     };
 
-    const updatedComments = [newComment, ...comments];
-    setComments(updatedComments);
-    localStorage.setItem("comments", JSON.stringify(updatedComments));
+    try {
+      const res = await fetch("http://localhost:3030/data/comments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Authorization": accessToken,
+        },
+        body: JSON.stringify(newComment),
+      });
 
-    setCommentText("");
-    setError("");
+      if (!res.ok) {
+        throw new Error("Грешка при добавяне на коментар");
+      }
+
+      const createdComment = await res.json();
+
+      setComments((state) => [createdComment, ...state]);
+      setCommentText("");
+      setError("");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const removeComment = (commentId) => {
-    const updatedComments = comments.filter((c) => c.id !== commentId);
-    setComments(updatedComments);
-    localStorage.setItem("comments", JSON.stringify(updatedComments));
+  // DELETE comment
+  const removeComment = async (commentId) => {
+    try {
+      await fetch(`http://localhost:3030/data/comments/${commentId}`, {
+        method: "DELETE",
+        headers: {
+          "X-Authorization": accessToken,
+        },
+      });
+
+      setComments((state) =>
+        state.filter((c) => c._id !== commentId)
+      );
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const startEdit = (comment) => {
-    setEditingCommentId(comment.id);
+    setEditingCommentId(comment._id);
     setEditingText(comment.text);
   };
 
-  const editChangeHandler = (e) => setEditingText(e.target.value);
+  const editChangeHandler = (e) => {
+    setEditingText(e.target.value);
+  };
 
-  const saveEdit = () => {
-    if (!editingText) {
-      return;
+ // PUT comment
+const saveEdit = async () => {
+  if (!editingText) {
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `http://localhost:3030/data/comments/${editingCommentId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Authorization": accessToken,
+        },
+        body: JSON.stringify({
+          text: editingText,
+        }),
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error("Грешка при редакция");
     }
 
+    // създаваме нов state, запазваме всички полета на коментара
     const updatedComments = comments.map((c) => {
-      if (c.id === editingCommentId) {
-        c.text = editingText;
+      if (c._id === editingCommentId) {
+        return { ...c, text: editingText };
       }
       return c;
     });
 
-    setComments(updatedComments);
-    localStorage.setItem("comments", JSON.stringify(updatedComments));
+    setComments(updatedComments); 
     setEditingCommentId("");
     setEditingText("");
-  };
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 
   return (
     <main className={styles.forumSection}>
@@ -100,10 +173,10 @@ export default function Forum() {
           <>
             <h3>Коментари от други пътешественици:</h3>
             {comments.map((comment) => (
-              <div key={comment.id} className={styles.commentCard}>
+              <div key={comment._id} className={styles.commentCard}>
                 <div className={styles.textSection}>
                   <h4>{comment.name}</h4>
-                  {editingCommentId === comment.id ? (
+                  {editingCommentId === comment._id ? (
                     <textarea
                       value={editingText}
                       onChange={editChangeHandler}
@@ -115,14 +188,14 @@ export default function Forum() {
 
                 {comment.owner === currentUserEmail && (
                   <div className={styles.buttonSection}>
-                    {editingCommentId === comment.id ? (
+                    {editingCommentId === comment._id ? (
                       <button onClick={saveEdit}>Запази</button>
                     ) : (
                       <button onClick={() => startEdit(comment)}>
                         Редактирай
                       </button>
                     )}
-                    <button onClick={() => removeComment(comment.id)}>
+                    <button onClick={() => removeComment(comment._id)}>
                       Изтрий
                     </button>
                   </div>
